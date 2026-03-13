@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Beyblade Judge Certification Quiz</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #111;
+            color: white;
+            text-align: center;
+        }
+
+        .quiz-box {
+            background: #1f1f1f;
+            padding: 25px;
+            width: 600px;
+            margin: auto;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 8px;
+            width: 80%;
+            border: none;
+            background: #e63946;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        button:hover {
+            background: #ff5a5f;
+            cursor: pointer;
+        }
+
+        #nextBtn {
+            background: #457b9d;
+        }
+    </style>
+    <link rel="icon" href="Ryuga.jpg">
+</head>
+
+<body>
+
+    <h1>WBO Beyblade Judge Quiz</h1>
+
+    <div class="quiz-box">
+
+        <h2 id="question">Question</h2>
+
+        <div id="answers"></div>
+
+        <br>
+        <button id="nextBtn" onclick="nextQuestion()">Next</button>
+
+        <h3 id="result"></h3>
+
+    </div>
+    <div style="background-color: #457b9d;">
+<center>
+
+
+
+
+
+</center>
+    </div>
+
+    <script>
+
+        let quiz = [
+
+            {
+                q: "What is the primary responsibility of a Beyblade Judge?",
+                a: [
+                    "Ensuring matches follow WBO rules",
+                    "Helping bladers win battles",
+                    "Choosing Beys for players",
+                    "Only counting scores"
+                ],
+                correct: 0
+            },
+
+            {
+                q: "Who resolves disputes if a blader disagrees with a judge?",
+                a: [
+                    "Another blader",
+                    "Head Judge or Organizer",
+                    "Spectators",
+                    "Parents"
+                ],
+                correct: 1
+            },
+
+            {
+                q: "How should launch position be decided?",
+                a: [
+                    "Judge chooses randomly",
+                    "Coin flip, die roll, or rock-paper-scissors",
+                    "The stronger blader chooses",
+                    "The older blader chooses"
+                ],
+                correct: 1
+            },
+
+            {
+                q: "How long should Bey selection normally take?",
+                a: [
+                    "30 seconds",
+"1 minute",
+                    "5 minutes",
+                    "No time limit"
+                ],
+                correct: 1
+            },
+
+            {
+                q: "What should happen if a blader launches early?",
+                a: [
+                    "They win",
+"Nothing happens",
+                    "Launch error and battle is voided",
+                    "They get extra points"
+                ],
+                correct: 2
+            },
+
+            {
+                q: "What must judges check during Bey inspection?",
+                a: [
+                    "That it looks cool",
+                   "That it is authentic and not broken",
+                    "That it is the same color",
+                    "That it spins fastest"
+                ],
+                correct: 1
+            },
+
+            {
+                q: "Can a judge play in tournaments?",
+                a: [
+                    "No",
+"Only if they win",
+                    "Yes, but they cannot judge their own matches",
+                    "Only once"
+                ],
+                correct: 2
+            },
+
+            {
+                q: "What should a judge do if a blader uses fake Beyblade parts?",
+                a: [
+                    "Allow it",
+"Immediately disqualify without explanation",
+                    "Politely explain and help find authentic parts",
+                    "Ignore it"
+                ],
+                correct: 2
+            },
+
+            {
+                q: "When can a blader request a relaunch?",
+                a: [
+                    "If their launch was obstructed",
+"If they are losing",
+                    "Anytime they want",
+                    "Only before launching"
+                ],
+                correct: 0
+            },
+
+            {
+                q: "What value should judges promote above all?",
+                a: [
+                    "Winning",
+"Speed",
+                    "Sportsmanship and fairness",
+                    "Power launches"
+                ],
+                correct: 2
+            }
+
+        ];
+
+        let current = 0;
+        let score = 0;
+
+        function loadQuestion() {
+
+            document.getElementById("question").innerText = quiz[current].q;
+
+            let answersHTML = "";
+
+            for (let i = 0; i < quiz[current].a.length; i++) {
+
+                answersHTML += `<button onclick="selectAnswer(${i})">${quiz[current].a[i]}</button><br>`;
+
+            }
+
+            document.getElementById("answers").innerHTML = answersHTML;
+
+        }
+
+        function selectAnswer(i) {
+
+            if (i === quiz[current].correct) {
+                score++;
+            }
+
+            nextQuestion();
+
+        }
+
+        function nextQuestion() {
+
+            current++;
+
+            if (current < quiz.length) {
+
+                loadQuestion();
+
+            } else {
+
+                document.getElementById("question").innerText = "Quiz Finished";
+                document.getElementById("answers").innerHTML = "";
+                document.getElementById("nextBtn").style.display = "none";
+
+            let percentage = Math.round((score / quiz.length) * 100);
+
+                let message = "You scored " + score + " / " + quiz.length +
+                    " (" + percentage + "%)\n\n";
+
+                if (percentage >= 90) {
+                    message += "🏆 Rank: Head Judge Level\nExcellent rule knowledge!";
+                }
+
+                else if (percentage >= 70) {
+                    message += "⚖️ Rank: Primary Judge\nGood understanding, but review advanced rules.";
+                }
+
+                else if (percentage >= 50) {
+                    message += "🧠 Rank: Trainee Judge\nReview difficult match situations.";
+                }
+
+                else {
+                    message += "📚 Rank: Beginner\nYou should study the rulebook again.";
+                }
+
+                message += "\n\nJudge Tips for Difficult Scenarios:\n";
+                message += "- Stay calm and neutral during disputes.\n";
+                message += "- If unsure about a ruling, consult the rulebook or Head Judge.\n";
+                message += "- Let battles finish before voiding unless absolutely necessary.\n";
+                message += "- Watch launches carefully for early pulls or obstruction.\n";
+                message += "- Inspect Beys out of view to maintain fairness.\n";
+                message += "- If cheating is suspected, inform the Organizer instead of arguing.\n";
+
+                document.getElementById("result").innerText = message;
+            }
+
+        }
+
+        loadQuestion();
+
+    </script>
+
+</body>
+
+</html>
