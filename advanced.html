@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Beyblade Judge Quiz</title>
+<style>
+  body { font-family: Arial, sans-serif; background-color: #f0f0f8; padding: 20px; }
+  h1 { text-align: center; color: #2c3e50; }
+  .quiz-container { max-width: 700px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+  .question { margin-bottom: 15px; }
+  .options label { display: block; margin: 5px 0; cursor: pointer; }
+  button { padding: 10px 20px; margin-top: 15px; cursor: pointer; border: none; background-color: #2980b9; color: white; border-radius: 5px; }
+  .result { margin-top: 20px; padding: 15px; border-radius: 8px; background-color: #ecf0f1; }
+  .tip { color: #e74c3c; margin-top: 5px; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Advanced Beyblade Judge Quiz</h1>
+<div class="quiz-container" id="quiz">
+</div>
+
+<script>
+const questions = [
+  {
+    question: "During a launch, a blader’s launcher string slips slightly but the Bey still launches. How should a judge handle it?",
+    options: ["Call a relaunch immediately", "Let the battle continue unless it clearly affects the outcome", "Disqualify the blader", "Stop the match and restart it by default"],
+    answer: 1,
+    tip: "Minor launcher slips are common. Only void if the launch clearly impacted fairness."
+  },
+  {
+    question: "A blader touches the stadium lightly while launching. What should the judge do?",
+    options: ["Declare launch error", "Allow it and advise them not to touch it next time", "Give opponent advantage", "Restart the match"],
+    answer: 1,
+    tip: "Negligible contact can be overlooked; maintain fairness and provide guidance."
+  },
+  {
+    question: "You notice a Bey component is slightly worn but still functions normally. What is the correct action?",
+    options: ["Call it broken and disqualify", "Request replacement only if performance is affected", "Ignore any wear", "Stop the tournament"],
+    answer: 1,
+    tip: "Judges must distinguish between wear from normal play and extreme wear affecting fairness."
+  },
+  {
+    question: "In a 3-on-3 match, a blader swaps Beys after the 3rd battle. What should a judge do?",
+    options: ["Allow it as long as the sequence is secret", "Ground for penalty or disqualification", "Ask Head Judge later and continue match", "Ignore if opponent doesn’t notice"],
+    answer: 1,
+    tip: "Maintaining Bey sequence integrity is crucial; swapping outside rules is penalizable."
+  },
+  {
+    question: "A blader requests a relaunch due to loud noise startling them. How should a judge respond?",
+    options: ["Automatically approve", "Use discretion to approve if it genuinely affected the launch", "Deny always", "Let opponent decide"],
+    answer: 1,
+    tip: "Use common sense. External disruptions can justify a relaunch request."
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+  if(currentQuestion >= questions.length){
+    document.getElementById('quiz').innerHTML = `
+      <h2>Your Score: ${Math.round((score/questions.length)*100)}%</h2>
+      <p>Advanced tips: Review the scenarios where you lost points; these are common tricky judging situations.</p>
+      <a href="index.html">Back to Basic Quiz</a>
+    `;
+    return;
+  }
+  const q = questions[currentQuestion];
+  const container = document.getElementById('quiz');
+  container.innerHTML = `<div class="question"><strong>${q.question}</strong></div>`;
+  const optionsHtml = q.options.map((opt,i) => `<div class="options"><label><input type="radio" name="option" value="${i}"> ${opt}</label></div>`).join('');
+  container.innerHTML += optionsHtml + `<button onclick="checkAnswer()">Submit</button><div class="tip" id="tip"></div>`;
+}
+
+function checkAnswer(){
+  const selected = document.querySelector('input[name="option"]:checked');
+  if(!selected){ alert("Please select an answer."); return; }
+  const answer = parseInt(selected.value);
+  if(answer === questions[currentQuestion].answer){ score++; }
+  const tipDiv = document.getElementById('tip');
+  tipDiv.innerText = questions[currentQuestion].tip;
+  currentQuestion++;
+  setTimeout(loadQuestion, 2000);
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
